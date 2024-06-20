@@ -74,6 +74,9 @@ def prepare_posts(links):
     for link in links:
         clean_tags = link["tags"].split(" ")
         clean_tags = list(filter(lambda t: t not in ("+", "-"), clean_tags))
+
+        # remove memento from clean_tags
+        clean_tags = list(filter(lambda t: t != "memento", clean_tags))
         link["clean_tags"] = sorted(clean_tags)
         print(link)
         if "quotable" in clean_tags:
