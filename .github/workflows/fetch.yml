@@ -1,0 +1,51 @@
+# .github/workflows/fetch.yml
+
+name: Fetch new links
+
+on:
+  schedule:
+    - cron: '0 10/20 * * *' # Runs twice a day
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  fetch-links:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install click==8.1.7 iso8601==2.1.0 Jinja2==3.1.4 MarkupSafe==2.1.5 pugsql==0.2.4 python-dotenv==1.0.1 SQLAlchemy==1.4.52 xmltodict==0.13.0
+
+    - name: Run fetch script
+      run: python jobs/fetch.py
+      env:
+        PINBOARD_API_TOKEN: ${{ secrets.PINBOARD_API_TOKEN }}
+        PINBOARD_API_TAG: ${{ secrets.PINBOARD_API_TAG }}
+        PINBOARD_API_COUNT: ${{ secrets.PINBOARD_API_COUNT }}
+    
+    - name: Check for changes
+      run: git status
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add data.db
+        if ! git diff-index --quiet HEAD --; then
+        git commit -m 'Github Action: Fetch new links'
+          git push
+        else
+          echo "No changes to commit."
+        fi
+ 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
