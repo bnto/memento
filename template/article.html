@@ -3,9 +3,11 @@
   {% for link in links %}
     <article>
       <header>
-        <h2><a href="{{ link.url }}">{{ link.title }}</a></h2>
+        <h2><a href="{{ link.url }}">{{ link.description | escape }}</a></h2>
       </header>
-      <p>{{ link.description | escape }}</p>
+      {% if link.extended %}
+        <p>{{ link.extended | escape }}</p>
+      {% endif %}
       {% if link.clean_tags %}
         <footer>
           {% for clean_tag in link.clean_tags %}
