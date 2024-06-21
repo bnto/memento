@@ -1,50 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-
-{% for link in links %}
-
-<article>
-
-    {% if link.quotable %}
-    {% if link.extended %}
-    <q>{{ link.extended | escape }}</q>
-
-    <span class="dash">&mdash;</span>
-    {% endif %}
-    <cite>
-        <a class="" href="{{ link.url }}">
-            {{ link.description | escape }}
-        </a>
-        {% if link.via %}
-        <a href="{{ link.via }}" class="via">via</a>
-        {% endif %}
-    </cite>
-    {% else %}
-
-
-    <span class="link-title">
-        <a class="" href="{{ link.url }}">{{ link.description | escape }}</a>
-    </span>
-    {% if link.extended %}
-    <span class="dash">&mdash;</span>
-    <span class="link-description">
-        {{ link.extended | escape }}
-    </span>
-    {% if link.via %}
-    <a href="{{ link.via }}" class="via">via</a>
-    {% endif %}
-    {% endif %}
-
-    {% endif %}
-    <span class="post-meta">
-        <span class="post-date">{{ link.ts|format_ts }}</span>
-
-        {% if link.clean_tags %}
+  {% for link in links %}
+    <article>
+      <header>
+        <h2><a href="{{ link.url }}">{{ link.title }}</a></h2>
+      </header>
+      <p>{{ link.description | escape }}</p>
+      {% if link.clean_tags %}
+        <footer>
           {% for clean_tag in link.clean_tags %}
-            &middot; <span class="tags">{{ clean_tag }}</span>
+            <span class="tags">{{ clean_tag }}</span>
           {%- endfor -%}
-        {% endif %}
-    </span>
-</article>
-{%- endfor -%}
+        </footer>
+      {% endif %}
+    </article>
+  {%- endfor -%}
 {% endblock %}
