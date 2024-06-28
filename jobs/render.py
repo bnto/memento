@@ -1,7 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 import db
 import datetime
-import os
+# import os
 import collections
 
 file_loader = FileSystemLoader("template")
@@ -27,7 +27,7 @@ def create_index(count=100, template="article.html"):
     posts = prepare_posts(posts)
     data = {"page": {}, "links": posts}
 
-    with open(f"index.html", "w") as fp:
+    with open("index.html", "w") as fp:
         fp.write(render(template, data))
 
 
@@ -78,7 +78,7 @@ def prepare_posts(links):
         # remove memento from clean_tags
         clean_tags = list(filter(lambda t: t != "memento", clean_tags))
         link["clean_tags"] = sorted(clean_tags)
-        print(link)
+
         if "quotable" in clean_tags:
             link["quotable"] = True
 
