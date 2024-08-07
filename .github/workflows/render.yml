@@ -2,7 +2,7 @@ name: Render HTML
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5' # Runs every working day at 7am
+    - cron: '0 7 * * 0' # Runs every sunday at 7am
   workflow_dispatch:
 
 jobs:
