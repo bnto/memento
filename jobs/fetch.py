@@ -4,6 +4,7 @@ import xmltodict, iso8601
 import urllib.request
 import db
 import datetime
+from typing import Any
 
 load_dotenv()
 
