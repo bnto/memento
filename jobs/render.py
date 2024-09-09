@@ -1,7 +1,5 @@
-from jinja2 import Environment, FileSystemLoader
 import db
 import datetime
-# import os
 import collections
 
 file_loader = FileSystemLoader("template")

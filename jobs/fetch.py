@@ -1,8 +1,7 @@
 from dotenv import load_dotenv
 import os
-import xmltodict, iso8601, click
-import json, urllib.request, sys
-from typing import Any
+import xmltodict, iso8601
+import urllib.request
 import db
 import datetime
 
